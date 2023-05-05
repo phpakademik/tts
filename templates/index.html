@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TTS in flask app</title>
+	<link rel="stylesheet" href="/static/style/bootstrap.css">
+</head>
+<body>
+
+	<div class="container">
+		<div class="col-lg-4 offset-2">
+			<audio></audio>
+			<form method="post">
+				<textarea name="text" id="text" class="form-control" placeholder="Insert text"></textarea><br>
+				<button type="button" id="button" class="btn btn-success">Speek</button>
+			</form>
+
+		</div>
+	</div>
+
+
+	<script type="text/javascript" src="/static/style/jquery.js"></script>
+	<script>
+		$(function(){
+			$('#button').click(function(event){
+				event.preventDefault()
+				$.ajax({
+					url:'/tts',
+					method:'post',
+					data: {text:$('#text').val()},
+					success: function(data){
+						$('audio').attr('src','/static/'+data.audio).play()
+					}
+				})
+			})
+		})
+	</script>
+</body>
+</html>
